@@ -47,3 +47,13 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db), current
 def get_tasks(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     tasks = db.query(models.Task).filter(models.Task.owner_id == current_user.id).all()
     return tasks
+
+@router.delete("/{task_id}", status_code=204)
+def delete_task(task_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    task = db.query(models.Task).filter(models.Task.id == task_id, models.Task.owner_id == current_user.id).first()
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    db.delete(task)
+    db.commit()
+    return
