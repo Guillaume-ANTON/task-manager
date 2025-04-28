@@ -23,7 +23,7 @@ def create_access_token(data: dict):
 
 def decode_access_token(token: str):
     try:
-        payload : jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except JWTError:
         return None
