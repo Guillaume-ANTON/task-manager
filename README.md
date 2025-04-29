@@ -9,11 +9,11 @@ A modern FastAPI application to manage personal tasks securely using JWT authent
 - User Signup and Login
 - JWT-based authentication
 - Create, Read, and Delete personal tasks
-- SQLite Database with SQLAlchemy ORM
+- SQLite or PostgreSQL support with SQLAlchemy ORM
 - Password hashing with bcrypt
 - Protected routes (token-based access)
-- Easy local development with `run.sh`
-- Ready for future PostgreSQL, Docker, CI/CD upgrades
+- Easy local development with Docker or run script
+- Ready for PostgreSQL, Docker, CI/CD workflows
 
 ---
 
@@ -31,10 +31,14 @@ task-manager/
 │   └── routes/
 │       ├── users.py
 │       └── tasks.py
+├── venv/ (ignored)
 ├── tests/ (to be added)
 ├── run.sh
 ├── requirements.txt
 ├── .gitignore
+├── .env
+├── Dockerfile
+├── docker-compose.yml
 └── README.md
 ```
 
@@ -49,27 +53,21 @@ git clone https://github.com/Guillaume-ANTON/task-manager.git
 cd task-manager
 ```
 
-### 2. Create and activate a virtual environment
+### 2. Configure environment variables
 
-```bash
-python3.11 -m venv venv
-source venv/bin/activate
+Create a `.env` file with:
+
+```env
+DATABASE_URL=postgresql://user:password@db:5432/taskmanager
 ```
 
-### 3. Install the dependencies
+### 3. Run with Docker (recommended)
 
 ```bash
-pip install -r requirements.txt
+docker-compose up --build
 ```
 
-### 4. Start the server
-
-```bash
-./run.sh
-```
-
-Server will be available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)  
-Swagger UI documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+The API will be available at: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
@@ -89,11 +87,12 @@ Swagger UI documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/doc
 - **FastAPI** - Framework
 - **Uvicorn** - ASGI Server
 - **SQLAlchemy** - ORM
-- **SQLite** - Local Database
+- **PostgreSQL / SQLite** - Database support
 - **JWT** - Authentication tokens
 - **Passlib** - Password hashing
 - **Pydantic** - Data validation
 - **Pytest** (coming soon) - Testing
+- **Docker** - Containerized app
 
 ---
 
@@ -101,7 +100,6 @@ Swagger UI documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/doc
 
 - [ ] Add task updating (`PUT /tasks/{id}`)
 - [ ] Full unit and integration tests with `pytest`
-- [ ] Switch to PostgreSQL + Docker
 - [ ] Add CI/CD pipeline (GitHub Actions)
 - [ ] Deploy to Render, Railway, or AWS
 
